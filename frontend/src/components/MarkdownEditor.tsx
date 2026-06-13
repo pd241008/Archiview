@@ -56,20 +56,49 @@ export default function MarkdownEditor() {
         <meta charset="utf-8">
         <title>Document</title>
         <style>
-          body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 2rem; background: #fff; }
-          h1, h2, h3, h4, h5, h6 { margin-top: 24px; margin-bottom: 16px; font-weight: 600; line-height: 1.25; color: #000; }
-          h1 { font-size: 2em; border-bottom: 1px solid #eaecef; padding-bottom: .3em; }
-          h2 { font-size: 1.5em; border-bottom: 1px solid #eaecef; padding-bottom: .3em; }
-          p, blockquote, ul, ol, dl, table, pre { margin-top: 0; margin-bottom: 16px; }
-          ul, ol { padding-left: 2em; }
-          table { display: block; width: 100%; overflow: auto; border-spacing: 0; border-collapse: collapse; }
-          table th, table td { padding: 6px 13px; border: 1px solid #dfe2e5; }
-          table tr:nth-child(2n) { background-color: #f6f8fa; }
-          blockquote { padding: 0 1em; color: #6a737d; border-left: 0.25em solid #dfe2e5; }
-          code { padding: 0.2em 0.4em; margin: 0; font-size: 85%; background-color: rgba(27,31,35,0.05); border-radius: 3px; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
-          pre { padding: 16px; overflow: auto; font-size: 85%; line-height: 1.45; background-color: #f6f8fa; border-radius: 3px; }
-          pre code { display: inline; max-width: auto; padding: 0; margin: 0; overflow: visible; line-height: inherit; word-wrap: normal; background-color: transparent; border: 0; }
-          svg { max-width: 100%; }
+          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+          body { 
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; 
+            line-height: 1.8; 
+            color: #cbd5e1; 
+            max-width: 900px; 
+            margin: 0 auto; 
+            padding: 4rem 2rem; 
+            background: #0a0f1c; 
+            font-size: 1.05rem;
+          }
+          h1, h2, h3, h4, h5, h6 { color: #ffffff; font-weight: 700; letter-spacing: -0.025em; }
+          h1 { 
+            font-size: 2.5em; text-align: center; letter-spacing: 0.1em; 
+            margin-top: 1em; margin-bottom: 0.2em; text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+          }
+          h2 { 
+            font-size: 1.25em; color: #00f0ff; 
+            background: linear-gradient(90deg, rgba(30, 58, 138, 0.6) 0%, rgba(30, 58, 138, 0.1) 100%);
+            border-left: 4px solid #00f0ff; padding: 0.5em 1em; margin-top: 2.5em; margin-bottom: 1em; 
+            border-radius: 0 4px 4px 0; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center;
+          }
+          h2::before { content: "■"; margin-right: 12px; color: #00f0ff; font-size: 0.8em; text-shadow: 0 0 10px #00f0ff; }
+          h3 { font-size: 1.15em; color: #b026ff; margin-top: 1.5em; }
+          p { margin-bottom: 1.25em; }
+          a { color: #00f0ff; text-decoration: none; font-weight: 500; }
+          strong { color: #ffffff; font-weight: 600; }
+          blockquote { 
+            border-left: 4px solid #b026ff; background: rgba(176, 38, 255, 0.1); color: #e2e8f0; 
+            padding: 1em 1.5em; margin: 1.5em 0; border-radius: 0 0.5rem 0.5rem 0; font-style: italic; 
+          }
+          ul, ol { padding-left: 1.5em; margin-bottom: 1.25em; }
+          li { margin-bottom: 0.5em; }
+          li::marker { color: #00f0ff; }
+          table { width: 100%; border-collapse: collapse; margin-bottom: 1.5em; background: rgba(15, 23, 42, 0.6); border: 1px solid #00f0ff; border-radius: 4px; overflow: hidden; display: table; }
+          th, td { border: 1px solid rgba(0, 240, 255, 0.2); padding: 0.85em 1em; text-align: left; font-size: 0.9em; }
+          th { background: rgba(0, 240, 255, 0.1); font-weight: 600; color: #00f0ff; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.8em; border-bottom: 2px solid #00f0ff; }
+          tr:nth-child(even) td { background: rgba(0, 240, 255, 0.02); }
+          code { background: rgba(0, 240, 255, 0.15); color: #00f0ff; padding: 0.2em 0.4em; border-radius: 0.25rem; font-size: 0.85em; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; border: 1px solid rgba(0, 240, 255, 0.3); }
+          pre { background: #050810; padding: 1.25em; border-radius: 0.5rem; overflow-x: auto; margin-bottom: 1.5em; border: 1px solid rgba(0, 240, 255, 0.2); box-shadow: 0 4px 20px -2px rgba(0, 240, 255, 0.1); }
+          pre code { background: transparent; color: #e2e8f0; padding: 0; font-size: 0.9em; border: none; }
+          hr { border: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(176, 38, 255, 0.8), rgba(0, 240, 255, 0.8), transparent); margin: 3em 0; box-shadow: 0 0 10px rgba(0, 240, 255, 0.4); }
+          svg { max-width: 100%; display: block; margin: 0 auto; }
         </style>
       </head>
       <body>

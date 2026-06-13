@@ -6,12 +6,81 @@
 }
 
 @media print {
+  @page { margin: 1.5cm; }
   body {
-    background: white;
+    background: #0a0f1c !important;
+    color: #cbd5e1 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  .markdown-preview h1,
+  .markdown-preview h2,
+  .markdown-preview h3,
+  .markdown-preview h4,
+  .markdown-preview h5,
+  .markdown-preview h6 {
+    color: #ffffff !important;
+    font-family: "Inter", sans-serif;
+  }
+
+  .markdown-preview h1 {
+    font-size: 2.5em; text-align: center; letter-spacing: 0.1em;
+    margin-top: 1em; margin-bottom: 0.2em; text-shadow: 0 0 20px rgba(255, 255, 255, 0.3) !important;
+  }
+
+  .markdown-preview h2 {
+    font-size: 1.25em; color: #00f0ff !important;
+    background: linear-gradient(90deg, rgba(30, 58, 138, 0.6) 0%, rgba(30, 58, 138, 0.1) 100%) !important;
+    border-left: 4px solid #00f0ff !important; padding: 0.5em 1em; margin-top: 2.5em; margin-bottom: 1em;
+    border-radius: 0 4px 4px 0; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center;
+  }
+  
+  .markdown-preview h2::before {
+    content: "■"; margin-right: 12px; color: #00f0ff; font-size: 0.8em;
+  }
+
+  .markdown-preview h3 { font-size: 1.15em; color: #b026ff !important; margin-top: 1.5em; }
+  .markdown-preview a { color: #00f0ff !important; text-decoration: none; font-weight: 500; }
+  .markdown-preview strong { color: #ffffff !important; font-weight: 600; }
+  
+  .markdown-preview blockquote {
+    border-left: 4px solid #b026ff !important; background: rgba(176, 38, 255, 0.1) !important; color: #e2e8f0 !important;
+    padding: 1em 1.5em; margin: 1.5em 0; font-style: italic;
+  }
+
+  .markdown-preview li::marker { color: #00f0ff !important; }
+  
+  .markdown-preview table {
+    width: 100%; border-collapse: collapse; margin-bottom: 1.5em; 
+    background: rgba(15, 23, 42, 0.6) !important; border: 1px solid #00f0ff !important;
+  }
+  
+  .markdown-preview th, .markdown-preview td {
+    border: 1px solid rgba(0, 240, 255, 0.2) !important; padding: 0.85em 1em; text-align: left;
+  }
+
+  .markdown-preview th {
+    background: rgba(0, 240, 255, 0.1) !important; font-weight: 600; color: #00f0ff !important;
+    text-transform: uppercase; border-bottom: 2px solid #00f0ff !important;
+  }
+  
+  .markdown-preview code {
+    background: rgba(0, 240, 255, 0.15) !important; color: #00f0ff !important; padding: 0.2em 0.4em;
+    border: 1px solid rgba(0, 240, 255, 0.3) !important;
+  }
+
+  .markdown-preview pre {
+    background: #050810 !important; padding: 1.25em; overflow-x: auto; margin-bottom: 1.5em;
+    border: 1px solid rgba(0, 240, 255, 0.2) !important;
+  }
+
+  .markdown-preview pre code { background: transparent !important; color: #e2e8f0 !important; border: none !important; }
+  
+  .markdown-preview hr {
+    border: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(176, 38, 255, 0.8), rgba(0, 240, 255, 0.8), transparent) !important; margin: 3em 0;
   }
 }
-
-/* Custom Scrollbar for a premium feel */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
