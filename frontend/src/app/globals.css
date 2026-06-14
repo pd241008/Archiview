@@ -7,11 +7,21 @@
 
 @media print {
   @page { margin: 1.5cm; }
-  body {
-    background: #0a0f1c !important;
-    color: #cbd5e1 !important;
+  body, html, .markdown-preview {
+    background-color: #020617 !important;
+    color: #f8fafc !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+  }
+
+  .markdown-preview,
+  .markdown-preview p,
+  .markdown-preview span,
+  .markdown-preview div,
+  .markdown-preview td,
+  .markdown-preview th,
+  .markdown-preview li {
+    color: #f8fafc !important;
   }
   
   .markdown-preview h1,
@@ -26,59 +36,85 @@
 
   .markdown-preview h1 {
     font-size: 2.5em; text-align: center; letter-spacing: 0.1em;
-    margin-top: 1em; margin-bottom: 0.2em; text-shadow: 0 0 20px rgba(255, 255, 255, 0.3) !important;
+    margin-top: 1em; margin-bottom: 0.2em; 
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(0, 240, 255, 0.5) !important;
   }
 
   .markdown-preview h2 {
-    font-size: 1.25em; color: #00f0ff !important;
-    background: linear-gradient(90deg, rgba(30, 58, 138, 0.6) 0%, rgba(30, 58, 138, 0.1) 100%) !important;
-    border-left: 4px solid #00f0ff !important; padding: 0.5em 1em; margin-top: 2.5em; margin-bottom: 1em;
+    font-size: 1.25em; color: #00ffff !important;
+    background: linear-gradient(90deg, rgba(0, 240, 255, 0.2) 0%, rgba(176, 38, 255, 0.1) 50%, transparent 100%) !important;
+    border-left: 4px solid #00ffff !important; padding: 0.6em 1em; margin-top: 2.5em; margin-bottom: 1em;
     border-radius: 0 4px 4px 0; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center;
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.6) !important;
+    box-shadow: inset 20px 0 30px -15px rgba(0, 255, 255, 0.2) !important;
   }
   
   .markdown-preview h2::before {
-    content: "■"; margin-right: 12px; color: #00f0ff; font-size: 0.8em;
+    content: "■"; margin-right: 12px; color: #00ffff; font-size: 0.8em;
+    text-shadow: 0 0 12px #00ffff !important;
   }
 
-  .markdown-preview h3 { font-size: 1.15em; color: #b026ff !important; margin-top: 1.5em; }
-  .markdown-preview a { color: #00f0ff !important; text-decoration: none; font-weight: 500; }
-  .markdown-preview strong { color: #ffffff !important; font-weight: 600; }
+  .markdown-preview h3 { 
+    font-size: 1.15em; color: #e879f9 !important; margin-top: 1.5em; 
+    text-shadow: 0 0 8px rgba(232, 121, 249, 0.6) !important;
+  }
+  .markdown-preview a { color: #00ffff !important; text-decoration: none; font-weight: 500; text-shadow: 0 0 5px rgba(0,255,255,0.4) !important;}
+  .markdown-preview strong { color: #ffffff !important; font-weight: 700; text-shadow: 0 0 2px rgba(255,255,255,0.4) !important;}
   
   .markdown-preview blockquote {
-    border-left: 4px solid #b026ff !important; background: rgba(176, 38, 255, 0.1) !important; color: #e2e8f0 !important;
+    border-left: 4px solid #d946ef !important; 
+    background: linear-gradient(90deg, rgba(217, 70, 239, 0.15) 0%, transparent 100%) !important; 
+    color: #e2e8f0 !important;
     padding: 1em 1.5em; margin: 1.5em 0; font-style: italic;
+    box-shadow: inset 10px 0 20px -10px rgba(217, 70, 239, 0.2) !important;
   }
 
-  .markdown-preview li::marker { color: #00f0ff !important; }
+  .markdown-preview li::marker { color: #00ffff !important; text-shadow: 0 0 5px #00ffff !important;}
   
   .markdown-preview table {
-    width: 100%; border-collapse: collapse; margin-bottom: 1.5em; 
-    background: rgba(15, 23, 42, 0.6) !important; border: 1px solid #00f0ff !important;
+    width: 100%; border-collapse: separate; border-spacing: 0; margin-bottom: 1.5em; 
+    background: rgba(2, 6, 23, 0.8) !important; 
+    border: 1px solid #00ffff !important;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.1) !important;
+    border-radius: 6px;
   }
   
   .markdown-preview th, .markdown-preview td {
-    border: 1px solid rgba(0, 240, 255, 0.2) !important; padding: 0.85em 1em; text-align: left;
+    border: 1px solid rgba(0, 255, 255, 0.15) !important; padding: 0.85em 1em; text-align: left;
   }
 
   .markdown-preview th {
-    background: rgba(0, 240, 255, 0.1) !important; font-weight: 600; color: #00f0ff !important;
-    text-transform: uppercase; border-bottom: 2px solid #00f0ff !important;
+    background: rgba(0, 255, 255, 0.15) !important; font-weight: 700; color: #00ffff !important;
+    text-transform: uppercase; border-bottom: 2px solid #00ffff !important;
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.5) !important;
   }
   
   .markdown-preview code {
-    background: rgba(0, 240, 255, 0.15) !important; color: #00f0ff !important; padding: 0.2em 0.4em;
-    border: 1px solid rgba(0, 240, 255, 0.3) !important;
+    background: rgba(0, 255, 255, 0.1) !important; color: #00ffff !important; padding: 0.2em 0.4em;
+    border: 1px solid rgba(0, 255, 255, 0.3) !important;
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.3) !important;
   }
 
   .markdown-preview pre {
-    background: #050810 !important; padding: 1.25em; overflow-x: auto; margin-bottom: 1.5em;
-    border: 1px solid rgba(0, 240, 255, 0.2) !important;
+    background: #020617 !important; padding: 1.25em; overflow-x: auto; margin-bottom: 1.5em;
+    border: 1px solid rgba(0, 255, 255, 0.3) !important;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1) !important;
   }
 
-  .markdown-preview pre code { background: transparent !important; color: #e2e8f0 !important; border: none !important; }
+  .markdown-preview pre code { 
+    background: transparent !important; color: #f8fafc !important; border: none !important; 
+    text-shadow: none !important;
+  }
   
   .markdown-preview hr {
-    border: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(176, 38, 255, 0.8), rgba(0, 240, 255, 0.8), transparent) !important; margin: 3em 0;
+    border: 0; height: 2px; 
+    background: linear-gradient(90deg, transparent, #d946ef, #00ffff, transparent) !important; 
+    margin: 3em 0;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6) !important;
+  }
+
+  .mermaid-wrapper svg {
+    filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.2));
   }
 }
 ::-webkit-scrollbar {
