@@ -1,86 +1,145 @@
 import Link from 'next/link';
-import { ArrowRight, Sparkles, FileCode, Printer, Palette } from 'lucide-react';
+import { ArrowRight, Sparkles, FileCode, Printer, Palette, ChevronRight } from 'lucide-react';
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-200 overflow-hidden relative selection:bg-cyan-500/30">
-      {/* Dynamic Background Elements */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-1/4 -left-1/4 w-[1000px] h-[1000px] bg-cyan-600/10 rounded-full blur-[120px] mix-blend-screen animate-pulse" style={{ animationDuration: '8s' }}></div>
-        <div className="absolute -bottom-1/4 -right-1/4 w-[800px] h-[800px] bg-fuchsia-600/10 rounded-full blur-[100px] mix-blend-screen animate-pulse" style={{ animationDuration: '10s' }}></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150vw] h-[2px] bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent rotate-[-15deg]"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150vw] h-[2px] bg-gradient-to-r from-transparent via-fuchsia-500/20 to-transparent rotate-[15deg]"></div>
+    <div className="min-h-screen bg-[#050505] text-slate-200 selection:bg-indigo-500/30 font-sans relative overflow-x-hidden">
+      {/* Premium Background */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-indigo-500 opacity-20 blur-[100px]"></div>
       </div>
 
-      {/* Header */}
-      <header className="relative z-10 flex items-center justify-between px-8 py-6 border-b border-white/5 backdrop-blur-md">
+      {/* Navigation */}
+      <nav className="relative z-50 flex items-center justify-between px-6 py-6 mx-auto max-w-7xl">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-fuchsia-500 rounded-xl flex items-center justify-center text-[#020617] font-bold shadow-[0_0_20px_rgba(0,255,255,0.4)]">
-            A
+          <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center">
+            <span className="text-[#050505] font-bold text-lg">A</span>
           </div>
-          <span className="text-xl font-bold tracking-widest text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">ARCHIVIEW</span>
+          <span className="font-semibold tracking-tight text-white">Archiview</span>
         </div>
         <Link 
           href="/editor"
-          className="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/20 rounded-full transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.3)]"
+          className="text-sm font-medium text-slate-300 hover:text-white transition-colors"
         >
-          Open Editor
+          Sign In
         </Link>
-      </header>
+      </nav>
 
-      {/* Hero Section */}
-      <main className="relative z-10 flex flex-col items-center justify-center px-4 pt-32 pb-20 text-center">
-        <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 text-xs font-semibold tracking-widest text-cyan-400 uppercase border rounded-full border-cyan-500/30 bg-cyan-500/10 shadow-[0_0_20px_rgba(0,255,255,0.2)]">
-          <Sparkles size={14} /> The Celestial Eye Release
-        </div>
-        
-        <h1 className="max-w-4xl mb-6 text-6xl font-extrabold tracking-tight text-white sm:text-7xl lg:text-8xl drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
-          Documents That <br className="hidden sm:block" />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-fuchsia-500 drop-shadow-[0_0_20px_rgba(217,70,239,0.5)]">
-            Demand Attention
-          </span>
-        </h1>
-        
-        <p className="max-w-2xl mb-12 text-lg text-slate-400 sm:text-xl">
-          A premium markdown editor that transforms plain text into stunning, vibrant, print-ready reports with one click.
-        </p>
-
-        <div className="flex flex-col gap-4 sm:flex-row">
-          <Link 
-            href="/editor"
-            className="flex items-center justify-center gap-2 px-8 py-4 text-base font-bold text-[#020617] bg-cyan-400 hover:bg-cyan-300 rounded-full transition-all shadow-[0_0_30px_rgba(0,255,255,0.5)] hover:shadow-[0_0_40px_rgba(0,255,255,0.7)] hover:scale-105"
-          >
-            Start Writing <ArrowRight size={18} />
+      <main className="relative z-10 flex flex-col items-center justify-center px-6 pt-24 pb-24 text-center mx-auto max-w-7xl">
+        {/* Badge */}
+        <div className="inline-flex items-center gap-2 px-3 py-1 mb-10 text-sm font-medium border rounded-full text-slate-300 bg-white/5 border-white/10 backdrop-blur-md">
+          <Sparkles size={14} className="text-indigo-400" />
+          <span>Introducing The Celestial Eye</span>
+          <div className="w-px h-4 mx-1 bg-white/20"></div>
+          <Link href="/editor" className="flex items-center text-indigo-400 hover:text-indigo-300 transition-colors group">
+            Explore <ChevronRight size={14} className="ml-1 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
 
-        {/* Features Grid */}
-        <div className="grid max-w-5xl grid-cols-1 gap-8 mt-32 sm:grid-cols-3 text-left">
-          <div className="p-8 border rounded-2xl border-white/5 bg-white/5 backdrop-blur-sm hover:border-cyan-500/50 hover:bg-white/10 transition-colors group">
-            <div className="w-12 h-12 mb-6 rounded-xl bg-cyan-500/20 flex items-center justify-center text-cyan-400 group-hover:shadow-[0_0_20px_rgba(0,255,255,0.4)] transition-shadow">
-              <FileCode size={24} />
-            </div>
-            <h3 className="mb-3 text-xl font-bold text-white">Live Markdown</h3>
-            <p className="text-slate-400 text-sm leading-relaxed">A clean, distraction-free editing environment with real-time rendering of GitHub Flavored Markdown and Mermaid diagrams.</p>
-          </div>
+        {/* Hero Typography */}
+        <h1 className="max-w-4xl mb-6 text-5xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl">
+          Write beautifully. <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-400 to-emerald-400">
+            Publish effortlessly.
+          </span>
+        </h1>
 
-          <div className="p-8 border rounded-2xl border-white/5 bg-white/5 backdrop-blur-sm hover:border-fuchsia-500/50 hover:bg-white/10 transition-colors group">
-            <div className="w-12 h-12 mb-6 rounded-xl bg-fuchsia-500/20 flex items-center justify-center text-fuchsia-400 group-hover:shadow-[0_0_20px_rgba(217,70,239,0.4)] transition-shadow">
-              <Palette size={24} />
-            </div>
-            <h3 className="mb-3 text-xl font-bold text-white">Dynamic Palettes</h3>
-            <p className="text-slate-400 text-sm leading-relaxed">Bored of plain text? Randomize between carefully curated cyberpunk and neon color palettes to make your exports pop.</p>
-          </div>
+        <p className="max-w-2xl mb-10 text-lg leading-relaxed text-slate-400 sm:text-xl">
+          The markdown editor designed for teams that care about aesthetics. Transform plain text into stunning, print-ready reports with professional typography and vibrant themes.
+        </p>
 
-          <div className="p-8 border rounded-2xl border-white/5 bg-white/5 backdrop-blur-sm hover:border-purple-500/50 hover:bg-white/10 transition-colors group">
-            <div className="w-12 h-12 mb-6 rounded-xl bg-purple-500/20 flex items-center justify-center text-purple-400 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-shadow">
-              <Printer size={24} />
+        {/* CTA */}
+        <div className="flex flex-col items-center gap-4 sm:flex-row">
+          <Link 
+            href="/editor"
+            className="flex items-center justify-center gap-2 px-8 py-3.5 text-sm font-semibold text-black bg-white rounded-full hover:bg-slate-200 transition-all focus:ring-4 focus:ring-white/20 shadow-lg shadow-white/10 hover:scale-105"
+          >
+            Start Writing <ArrowRight size={16} />
+          </Link>
+          <a 
+            href="#features"
+            className="flex items-center justify-center gap-2 px-8 py-3.5 text-sm font-medium text-white transition-all bg-white/5 border border-white/10 rounded-full hover:bg-white/10"
+          >
+            Explore Features
+          </a>
+        </div>
+
+        {/* Product Preview / Editor Mockup */}
+        <div className="relative w-full max-w-5xl mt-24">
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent z-10 pointer-events-none"></div>
+          <div className="relative rounded-2xl border border-white/10 bg-[#0a0a0a] shadow-2xl overflow-hidden ring-1 ring-white/5">
+            <div className="flex items-center px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+              <div className="flex gap-2">
+                <div className="w-3 h-3 rounded-full bg-slate-700/50"></div>
+                <div className="w-3 h-3 rounded-full bg-slate-700/50"></div>
+                <div className="w-3 h-3 rounded-full bg-slate-700/50"></div>
+              </div>
+              <div className="mx-auto px-6 py-1 rounded-md bg-white/5 text-xs text-slate-500 font-mono">
+                editor.archiview.app
+              </div>
             </div>
-            <h3 className="mb-3 text-xl font-bold text-white">Stunning Exports</h3>
-            <p className="text-slate-400 text-sm leading-relaxed">Export directly to HTML or PDF with incredibly vibrant layouts, dark modes, and glowing typography automatically applied.</p>
+            <div className="p-8 sm:p-12 text-left border-l-[3px] border-indigo-500 bg-gradient-to-br from-white/[0.02] to-transparent min-h-[300px]">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6"># Architecture Overview</h2>
+              <p className="text-slate-400 mb-8 font-mono text-sm sm:text-base leading-loose">
+                <span className="text-indigo-400">import</span> {'{'} Engine {'}'} <span className="text-indigo-400">from</span> <span className="text-emerald-400">'@core'</span>;<br/>
+                <br/>
+                The system leverages a distributed microservices approach, ensuring high availability and fault tolerance across global nodes.
+              </p>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded border border-indigo-500/30 bg-indigo-500/10 text-xs font-mono text-indigo-300">
+                <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
+                live rendering active
+              </div>
+            </div>
           </div>
         </div>
+
+        {/* Feature Bento Box */}
+        <div id="features" className="grid w-full max-w-5xl grid-cols-1 gap-6 mt-32 md:grid-cols-3 text-left relative z-20">
+          
+          <div className="md:col-span-2 p-8 sm:p-10 rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.04] to-transparent relative overflow-hidden group">
+            <div className="absolute -top-10 -right-10 p-8 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
+              <FileCode size={160} className="text-indigo-400" />
+            </div>
+            <h3 className="text-xl font-semibold text-white mb-3 relative z-10">Real-time Markdown</h3>
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed max-w-md relative z-10">
+              Type on the left, see the polished result on the right. Instantly. Complete support for GitHub Flavored Markdown and integrated Mermaid diagram rendering.
+            </p>
+          </div>
+
+          <div className="p-8 sm:p-10 rounded-3xl border border-white/10 bg-white/[0.02] relative overflow-hidden group hover:bg-white/[0.04] transition-colors">
+            <Palette size={28} className="text-cyan-400 mb-6" />
+            <h3 className="text-xl font-semibold text-white mb-3">Curated Palettes</h3>
+            <p className="text-slate-400 text-sm leading-relaxed">
+              Ditch the default look. Select from designer-crafted neon and pastel themes to give your documents a distinct personality.
+            </p>
+          </div>
+
+          <div className="p-8 sm:p-10 rounded-3xl border border-white/10 bg-white/[0.02] relative overflow-hidden group hover:bg-white/[0.04] transition-colors">
+            <Printer size={28} className="text-emerald-400 mb-6" />
+            <h3 className="text-xl font-semibold text-white mb-3">Flawless Exports</h3>
+            <p className="text-slate-400 text-sm leading-relaxed">
+              Export to PDF or HTML with 100% fidelity. Your custom themes, glowing accents, and typography are baked perfectly into the final file.
+            </p>
+          </div>
+
+          <div className="md:col-span-2 p-8 sm:p-10 rounded-3xl border border-white/10 bg-gradient-to-tr from-white/[0.04] to-transparent relative overflow-hidden group">
+             <div className="absolute -bottom-10 -right-10 p-8 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
+              <Sparkles size={160} className="text-cyan-400" />
+            </div>
+            <h3 className="text-xl font-semibold text-white mb-3 relative z-10">Designed for Aesthetics</h3>
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed max-w-md relative z-10">
+              Every font weight, gradient, and line-height has been meticulously tuned. Stop sending boring white-page PDFs and start delivering reports that demand attention.
+            </p>
+          </div>
+
+        </div>
       </main>
+
+      {/* Footer */}
+      <footer className="border-t border-white/10 bg-[#050505] py-12 mt-12 relative z-20 text-center">
+        <p className="text-slate-500 text-sm">© 2026 Archiview. Crafted with precision.</p>
+      </footer>
     </div>
   );
 }
