@@ -9,8 +9,8 @@ export interface Palette {
 
 export const PALETTES: Palette[] = [
   { 
-    id: 'zenith', 
-    name: 'Project Zenith', 
+    id: 'celestial', 
+    name: 'Celestial', 
     primaryHex: '#00ffff', 
     secondaryHex: '#d946ef', 
     primaryRgb: '0, 255, 255', 
