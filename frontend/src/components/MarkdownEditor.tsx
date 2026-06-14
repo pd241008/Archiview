@@ -139,15 +139,13 @@ export default function MarkdownEditor() {
 
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-slate-950 text-slate-100 print:h-auto print:block print:overflow-visible">
-      {/* Inject Dynamic Print Variables */}
+      {/* Inject Dynamic Theme Variables */}
       <style>{`
-        @media print {
-          :root {
-            --theme-primary: ${activePalette.primaryHex};
-            --theme-primary-rgb: ${activePalette.primaryRgb};
-            --theme-secondary: ${activePalette.secondaryHex};
-            --theme-secondary-rgb: ${activePalette.secondaryRgb};
-          }
+        :root {
+          --theme-primary: ${activePalette.primaryHex};
+          --theme-primary-rgb: ${activePalette.primaryRgb};
+          --theme-secondary: ${activePalette.secondaryHex};
+          --theme-secondary-rgb: ${activePalette.secondaryRgb};
         }
       `}</style>
 
@@ -247,13 +245,13 @@ export default function MarkdownEditor() {
         </div>
 
         {/* Preview Pane */}
-        <div className="w-1/2 overflow-y-auto bg-slate-100/50 print:w-full print:block print:overflow-visible shadow-inner relative">
-          <div className="sticky top-0 z-10 flex items-center px-4 py-2 bg-slate-100/80 backdrop-blur-md border-b border-slate-200/60 text-[11px] font-bold text-slate-400 uppercase tracking-widest print:hidden">
+        <div className="w-1/2 overflow-y-auto bg-slate-950/50 print:w-full print:block print:overflow-visible shadow-inner relative">
+          <div className="sticky top-0 z-10 flex items-center px-4 py-2 bg-slate-900/80 backdrop-blur-md border-b border-slate-800/80 text-[11px] font-bold text-slate-400 uppercase tracking-widest print:hidden">
             Live Preview
           </div>
           <div className="p-8 pb-32">
             <div 
-              className="max-w-[850px] mx-auto bg-white p-12 sm:p-16 rounded-2xl shadow-xl border border-slate-200/60 markdown-preview print:max-w-none print:p-0 print:m-0 print:border-none print:shadow-none print:rounded-none print:bg-transparent transition-all duration-300"
+              className="max-w-[850px] mx-auto bg-[#020617] p-12 sm:p-16 rounded-2xl shadow-xl border border-slate-800/60 markdown-preview print:max-w-none print:p-0 print:m-0 print:border-none print:shadow-none print:rounded-none print:bg-transparent transition-all duration-300"
               ref={previewRef}
             >
               <ReactMarkdown
@@ -268,28 +266,18 @@ export default function MarkdownEditor() {
                     }
 
                     return match ? (
-                      <pre className="bg-slate-100 p-4 rounded-lg overflow-x-auto my-4 text-sm font-mono">
+                      <pre>
                         <code className={className} {...rest}>
                           {children}
                         </code>
                       </pre>
                     ) : (
-                      <code className="bg-slate-100 px-1.5 py-0.5 rounded text-sm font-mono text-pink-600" {...rest}>
+                      <code {...rest}>
                         {children}
                       </code>
                     );
                   },
-                  table: ({node, ...props}) => <div className="overflow-x-auto my-6"><table className="w-full text-left border-collapse" {...props} /></div>,
-                  th: ({node, ...props}) => <th className="border-b-2 border-slate-200 px-4 py-2 font-semibold text-slate-800" {...props} />,
-                  td: ({node, ...props}) => <td className="border-b border-slate-200 px-4 py-2" {...props} />,
-                  h1: ({node, ...props}) => <h1 className="text-3xl font-bold mt-8 mb-4 border-b pb-2" {...props} />,
-                  h2: ({node, ...props}) => <h2 className="text-2xl font-bold mt-8 mb-4 border-b pb-2" {...props} />,
-                  h3: ({node, ...props}) => <h3 className="text-xl font-bold mt-6 mb-3" {...props} />,
-                  p: ({node, ...props}) => <p className="my-4 leading-relaxed" {...props} />,
-                  ul: ({node, ...props}) => <ul className="list-disc list-inside my-4 space-y-1" {...props} />,
-                  ol: ({node, ...props}) => <ol className="list-decimal list-inside my-4 space-y-1" {...props} />,
-                  blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-slate-300 pl-4 py-1 my-4 text-slate-600 italic bg-slate-50 rounded-r" {...props} />,
-                  a: ({node, ...props}) => <a className="text-indigo-600 hover:underline" target="_blank" rel="noopener noreferrer" {...props} />,
+                  a: ({node, ...props}) => <a target="_blank" rel="noopener noreferrer" {...props} />,
                 }}
               >
                 {markdown}
