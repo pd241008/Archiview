@@ -4,7 +4,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Mermaid } from './Mermaid';
-import { Download, FileText, FileCode, FileDown } from 'lucide-react';
+import { Download, FileText, FileCode, FileDown, Palette as PaletteIcon } from 'lucide-react';
+import { PALETTES, Palette, getRandomPalette } from '@/lib/palettes';
 
 const DEFAULT_MARKDOWN = `# Welcome to the Editor
 Try out this interactive markdown editor!
@@ -32,6 +33,7 @@ graph TD;
 export default function MarkdownEditor() {
   const [markdown, setMarkdown] = useState<string>('# Welcome to the Editor\n\nType some markdown on the left to see it previewed on the right.\n\n```mermaid\ngraph TD;\n    A-->B;\n    A-->C;\n    B-->D;\n    C-->D;\n```');
   const previewRef = useRef<HTMLDivElement>(null);
+  const [activePalette, setActivePalette] = useState<Palette>(PALETTES[0]);
 
   // Download raw markdown
   const downloadMarkdown = () => {
@@ -60,45 +62,51 @@ export default function MarkdownEditor() {
           body { 
             font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; 
             line-height: 1.8; 
-            color: #cbd5e1; 
+            color: #f8fafc; 
             max-width: 900px; 
             margin: 0 auto; 
             padding: 4rem 2rem; 
-            background: #0a0f1c; 
+            background: #020617; 
             font-size: 1.05rem;
           }
           h1, h2, h3, h4, h5, h6 { color: #ffffff; font-weight: 700; letter-spacing: -0.025em; }
           h1 { 
             font-size: 2.5em; text-align: center; letter-spacing: 0.1em; 
-            margin-top: 1em; margin-bottom: 0.2em; text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            margin-top: 1em; margin-bottom: 0.2em; 
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(${activePalette.primaryRgb}, 0.5);
           }
           h2 { 
-            font-size: 1.25em; color: #00f0ff; 
-            background: linear-gradient(90deg, rgba(30, 58, 138, 0.6) 0%, rgba(30, 58, 138, 0.1) 100%);
-            border-left: 4px solid #00f0ff; padding: 0.5em 1em; margin-top: 2.5em; margin-bottom: 1em; 
+            font-size: 1.25em; color: ${activePalette.primaryHex}; 
+            background: linear-gradient(90deg, rgba(${activePalette.primaryRgb}, 0.2) 0%, rgba(${activePalette.secondaryRgb}, 0.1) 50%, transparent 100%);
+            border-left: 4px solid ${activePalette.primaryHex}; padding: 0.6em 1em; margin-top: 2.5em; margin-bottom: 1em; 
             border-radius: 0 4px 4px 0; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center;
+            text-shadow: 0 0 8px rgba(${activePalette.primaryRgb}, 0.6);
+            box-shadow: inset 20px 0 30px -15px rgba(${activePalette.primaryRgb}, 0.2);
           }
-          h2::before { content: "■"; margin-right: 12px; color: #00f0ff; font-size: 0.8em; text-shadow: 0 0 10px #00f0ff; }
-          h3 { font-size: 1.15em; color: #b026ff; margin-top: 1.5em; }
+          h2::before { content: "■"; margin-right: 12px; color: ${activePalette.primaryHex}; font-size: 0.8em; text-shadow: 0 0 12px ${activePalette.primaryHex}; }
+          h3 { font-size: 1.15em; color: ${activePalette.secondaryHex}; margin-top: 1.5em; text-shadow: 0 0 8px rgba(${activePalette.secondaryRgb}, 0.6); }
           p { margin-bottom: 1.25em; }
-          a { color: #00f0ff; text-decoration: none; font-weight: 500; }
-          strong { color: #ffffff; font-weight: 600; }
+          a { color: ${activePalette.primaryHex}; text-decoration: none; font-weight: 500; text-shadow: 0 0 5px rgba(${activePalette.primaryRgb},0.4); }
+          strong { color: #ffffff; font-weight: 700; text-shadow: 0 0 2px rgba(255,255,255,0.4); }
           blockquote { 
-            border-left: 4px solid #b026ff; background: rgba(176, 38, 255, 0.1); color: #e2e8f0; 
+            border-left: 4px solid ${activePalette.secondaryHex}; 
+            background: linear-gradient(90deg, rgba(${activePalette.secondaryRgb}, 0.15) 0%, transparent 100%); 
+            color: #e2e8f0; 
             padding: 1em 1.5em; margin: 1.5em 0; border-radius: 0 0.5rem 0.5rem 0; font-style: italic; 
+            box-shadow: inset 10px 0 20px -10px rgba(${activePalette.secondaryRgb}, 0.2);
           }
           ul, ol { padding-left: 1.5em; margin-bottom: 1.25em; }
           li { margin-bottom: 0.5em; }
-          li::marker { color: #00f0ff; }
-          table { width: 100%; border-collapse: collapse; margin-bottom: 1.5em; background: rgba(15, 23, 42, 0.6); border: 1px solid #00f0ff; border-radius: 4px; overflow: hidden; display: table; }
-          th, td { border: 1px solid rgba(0, 240, 255, 0.2); padding: 0.85em 1em; text-align: left; font-size: 0.9em; }
-          th { background: rgba(0, 240, 255, 0.1); font-weight: 600; color: #00f0ff; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.8em; border-bottom: 2px solid #00f0ff; }
-          tr:nth-child(even) td { background: rgba(0, 240, 255, 0.02); }
-          code { background: rgba(0, 240, 255, 0.15); color: #00f0ff; padding: 0.2em 0.4em; border-radius: 0.25rem; font-size: 0.85em; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; border: 1px solid rgba(0, 240, 255, 0.3); }
-          pre { background: #050810; padding: 1.25em; border-radius: 0.5rem; overflow-x: auto; margin-bottom: 1.5em; border: 1px solid rgba(0, 240, 255, 0.2); box-shadow: 0 4px 20px -2px rgba(0, 240, 255, 0.1); }
-          pre code { background: transparent; color: #e2e8f0; padding: 0; font-size: 0.9em; border: none; }
-          hr { border: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(176, 38, 255, 0.8), rgba(0, 240, 255, 0.8), transparent); margin: 3em 0; box-shadow: 0 0 10px rgba(0, 240, 255, 0.4); }
-          svg { max-width: 100%; display: block; margin: 0 auto; }
+          li::marker { color: ${activePalette.primaryHex}; text-shadow: 0 0 5px ${activePalette.primaryHex}; }
+          table { width: 100%; border-collapse: separate; border-spacing: 0; margin-bottom: 1.5em; background: rgba(2, 6, 23, 0.8); border: 1px solid ${activePalette.primaryHex}; border-radius: 6px; box-shadow: 0 0 15px rgba(${activePalette.primaryRgb}, 0.1); overflow: hidden; display: table; }
+          th, td { border: 1px solid rgba(${activePalette.primaryRgb}, 0.15); padding: 0.85em 1em; text-align: left; font-size: 0.9em; }
+          th { background: rgba(${activePalette.primaryRgb}, 0.15); font-weight: 700; color: ${activePalette.primaryHex}; text-transform: uppercase; border-bottom: 2px solid ${activePalette.primaryHex}; text-shadow: 0 0 8px rgba(${activePalette.primaryRgb}, 0.5); }
+          tr:nth-child(even) td { background: rgba(${activePalette.primaryRgb}, 0.02); }
+          code { background: rgba(${activePalette.primaryRgb}, 0.1); color: ${activePalette.primaryHex}; padding: 0.2em 0.4em; border-radius: 0.25rem; font-size: 0.85em; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; border: 1px solid rgba(${activePalette.primaryRgb}, 0.3); text-shadow: 0 0 5px rgba(${activePalette.primaryRgb}, 0.3); }
+          pre { background: #020617; padding: 1.25em; border-radius: 0.5rem; overflow-x: auto; margin-bottom: 1.5em; border: 1px solid rgba(${activePalette.primaryRgb}, 0.3); box-shadow: 0 0 20px rgba(${activePalette.primaryRgb}, 0.1); }
+          pre code { background: transparent; color: #f8fafc; padding: 0; font-size: 0.9em; border: none; text-shadow: none; }
+          hr { border: 0; height: 2px; background: linear-gradient(90deg, transparent, ${activePalette.secondaryHex}, ${activePalette.primaryHex}, transparent); margin: 3em 0; box-shadow: 0 0 15px rgba(${activePalette.primaryRgb}, 0.6); }
+          svg { max-width: 100%; display: block; margin: 0 auto; filter: drop-shadow(0 0 10px rgba(${activePalette.primaryRgb}, 0.2)); }
         </style>
       </head>
       <body>
@@ -131,40 +139,94 @@ export default function MarkdownEditor() {
 
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-slate-950 text-slate-100 print:h-auto print:block print:overflow-visible">
+      {/* Inject Dynamic Print Variables */}
+      <style>{`
+        @media print {
+          :root {
+            --theme-primary: ${activePalette.primaryHex};
+            --theme-primary-rgb: ${activePalette.primaryRgb};
+            --theme-secondary: ${activePalette.secondaryHex};
+            --theme-secondary-rgb: ${activePalette.secondaryRgb};
+          }
+        }
+      `}</style>
+
       {/* Header / Toolbar */}
       <header className="flex items-center justify-between px-6 py-4 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 shadow-xl z-20 print:hidden relative">
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-500/20">
+          <div 
+            className="w-10 h-10 rounded-xl flex items-center justify-center text-[#020617] font-bold shadow-lg transition-colors duration-500"
+            style={{ 
+              background: `linear-gradient(135deg, ${activePalette.primaryHex}, ${activePalette.secondaryHex})`,
+              boxShadow: `0 4px 20px rgba(${activePalette.primaryRgb}, 0.3)`
+            }}
+          >
             A
           </div>
           <div>
             <h1 className="text-lg font-semibold tracking-tight text-white">Archiview</h1>
-            <p className="text-xs text-slate-400 font-medium">Premium Markdown Experience</p>
+            <div className="flex items-center gap-2">
+              <p className="text-xs text-slate-400 font-medium">Export Theme:</p>
+              <span className="text-xs font-bold transition-colors" style={{ color: activePalette.primaryHex }}>
+                {activePalette.name}
+              </span>
+            </div>
           </div>
         </div>
         
-        <div className="flex items-center gap-3">
-          <button 
-            onClick={downloadMarkdown}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-200 bg-slate-800 border border-slate-700 rounded-lg hover:bg-slate-700 hover:text-white transition-all duration-200"
-          >
-            <FileCode size={16} />
-            <span className="hidden sm:inline">Markdown</span>
-          </button>
-          <button 
-            onClick={downloadHTML}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-200 bg-slate-800 border border-slate-700 rounded-lg hover:bg-slate-700 hover:text-white transition-all duration-200"
-          >
-            <Download size={16} />
-            <span className="hidden sm:inline">HTML</span>
-          </button>
-          <button 
-            onClick={downloadPDF}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg shadow-lg shadow-indigo-600/20 transition-all duration-200"
-          >
-            <FileDown size={16} />
-            <span className="hidden sm:inline">PDF</span>
-          </button>
+        <div className="flex items-center gap-6">
+          {/* Palette Picker */}
+          <div className="flex items-center gap-2 bg-slate-950/50 p-1.5 rounded-full border border-slate-800">
+            {PALETTES.map((p) => (
+              <button
+                key={p.id}
+                onClick={() => setActivePalette(p)}
+                className={`w-6 h-6 rounded-full transition-all duration-300 border-2 ${activePalette.id === p.id ? 'scale-110' : 'border-transparent opacity-50 hover:opacity-100 hover:scale-105'}`}
+                style={{ 
+                  background: `linear-gradient(135deg, ${p.primaryHex}, ${p.secondaryHex})`,
+                  borderColor: activePalette.id === p.id ? '#ffffff' : 'transparent',
+                  boxShadow: activePalette.id === p.id ? `0 0 10px rgba(${p.primaryRgb}, 0.6)` : 'none'
+                }}
+                title={p.name}
+              />
+            ))}
+            <div className="w-px h-4 bg-slate-700 mx-1"></div>
+            <button
+              onClick={() => setActivePalette(getRandomPalette(activePalette.id))}
+              className="p-1.5 text-slate-400 hover:text-white transition-colors"
+              title="Randomize Theme"
+            >
+              <PaletteIcon size={16} />
+            </button>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button 
+              onClick={downloadMarkdown}
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-200 bg-slate-800 border border-slate-700 rounded-lg hover:bg-slate-700 hover:text-white transition-all duration-200"
+            >
+              <FileCode size={16} />
+              <span className="hidden sm:inline">Markdown</span>
+            </button>
+            <button 
+              onClick={downloadHTML}
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-200 bg-slate-800 border border-slate-700 rounded-lg hover:bg-slate-700 hover:text-white transition-all duration-200"
+            >
+              <Download size={16} />
+              <span className="hidden sm:inline">HTML</span>
+            </button>
+            <button 
+              onClick={downloadPDF}
+              className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-[#020617] rounded-lg shadow-lg transition-all duration-300 hover:scale-105"
+              style={{
+                background: activePalette.primaryHex,
+                boxShadow: `0 4px 15px rgba(${activePalette.primaryRgb}, 0.4)`
+              }}
+            >
+              <FileDown size={16} />
+              <span className="hidden sm:inline">PDF</span>
+            </button>
+          </div>
         </div>
       </header>
 
@@ -202,7 +264,7 @@ export default function MarkdownEditor() {
                     const match = /language-(\w+)/.exec(className || '');
                     
                     if (match && match[1] === 'mermaid') {
-                      return <Mermaid chart={String(children).replace(/\n$/, '')} />;
+                      return <Mermaid chart={String(children).replace(/\n$/, '')} palette={activePalette} />;
                     }
 
                     return match ? (
