@@ -30,6 +30,26 @@ graph TD;
 | PDF Export | Yes |
 `;
 
+const extractText = (node: any): string => {
+  if (!node) return '';
+  if (node.type === 'text') return node.value || '';
+  if (node.children && Array.isArray(node.children)) {
+    return node.children.map(extractText).join('');
+  }
+  return '';
+};
+
+const getStableColor = (node: any): string => {
+  const text = extractText(node);
+  let hash = 0;
+  for (let i = 0; i < text.length; i++) {
+    hash = text.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const colors = ['primary', 'secondary', 'tertiary'];
+  return colors[Math.abs(hash) % colors.length] || 'primary';
+};
+
+
 export default function MarkdownEditor() {
   const [markdown, setMarkdown] = useState<string>('# Welcome to the Editor\n\nType some markdown on the left to see it previewed on the right.\n\n```mermaid\ngraph TD;\n    A-->B;\n    A-->C;\n    B-->D;\n    C-->D;\n```');
   const previewRef = useRef<HTMLDivElement>(null);
@@ -70,21 +90,29 @@ export default function MarkdownEditor() {
             font-size: 1.05rem;
           }
           h1, h2, h3, h4, h5, h6 { color: #ffffff; font-weight: 700; letter-spacing: -0.025em; }
+          :root {
+            --theme-primary: ${activePalette.primaryHex};
+            --theme-primary-rgb: ${activePalette.primaryRgb};
+            --theme-secondary: ${activePalette.secondaryHex};
+            --theme-secondary-rgb: ${activePalette.secondaryRgb};
+            --theme-tertiary: ${activePalette.tertiaryHex};
+            --theme-tertiary-rgb: ${activePalette.tertiaryRgb};
+          }
           h1 { 
             font-size: 2.5em; text-align: center; letter-spacing: 0.1em; 
             margin-top: 1em; margin-bottom: 0.2em; 
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(${activePalette.primaryRgb}, 0.5);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(var(--theme-primary-rgb), 0.5);
           }
           h2 { 
-            font-size: 1.25em; color: ${activePalette.primaryHex}; 
-            background: linear-gradient(90deg, rgba(${activePalette.primaryRgb}, 0.2) 0%, rgba(${activePalette.secondaryRgb}, 0.1) 50%, transparent 100%);
-            border-left: 4px solid ${activePalette.primaryHex}; padding: 0.6em 1em; margin-top: 2.5em; margin-bottom: 1em; 
+            font-size: 1.25em; color: var(--h2-hex, var(--theme-primary)); 
+            background: linear-gradient(90deg, rgba(var(--h2-rgb, var(--theme-primary-rgb)), 0.2) 0%, rgba(var(--h2-rgb, var(--theme-primary-rgb)), 0.05) 50%, transparent 100%);
+            border-left: 4px solid var(--h2-hex, var(--theme-primary)); padding: 0.6em 1em; margin-top: 2.5em; margin-bottom: 1em; 
             border-radius: 0 4px 4px 0; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center;
-            text-shadow: 0 0 8px rgba(${activePalette.primaryRgb}, 0.6);
-            box-shadow: inset 20px 0 30px -15px rgba(${activePalette.primaryRgb}, 0.2);
+            text-shadow: 0 0 8px rgba(var(--h2-rgb, var(--theme-primary-rgb)), 0.6);
+            box-shadow: inset 20px 0 30px -15px rgba(var(--h2-rgb, var(--theme-primary-rgb)), 0.2);
           }
-          h2::before { content: "■"; margin-right: 12px; color: ${activePalette.primaryHex}; font-size: 0.8em; text-shadow: 0 0 12px ${activePalette.primaryHex}; }
-          h3 { font-size: 1.15em; color: ${activePalette.secondaryHex}; margin-top: 1.5em; text-shadow: 0 0 8px rgba(${activePalette.secondaryRgb}, 0.6); }
+          h2::before { content: "■"; margin-right: 12px; color: var(--h2-hex, var(--theme-primary)); font-size: 0.8em; text-shadow: 0 0 12px var(--h2-hex, var(--theme-primary)); }
+          h3 { font-size: 1.15em; color: var(--h3-hex, var(--theme-secondary)); margin-top: 1.5em; text-shadow: 0 0 8px rgba(var(--h3-rgb, var(--theme-secondary-rgb)), 0.6); }
           p { margin-bottom: 1.25em; }
           a { color: ${activePalette.primaryHex}; text-decoration: none; font-weight: 500; text-shadow: 0 0 5px rgba(${activePalette.primaryRgb},0.4); }
           strong { color: #ffffff; font-weight: 700; text-shadow: 0 0 2px rgba(255,255,255,0.4); }
@@ -146,6 +174,8 @@ export default function MarkdownEditor() {
           --theme-primary-rgb: ${activePalette.primaryRgb};
           --theme-secondary: ${activePalette.secondaryHex};
           --theme-secondary-rgb: ${activePalette.secondaryRgb};
+          --theme-tertiary: ${activePalette.tertiaryHex};
+          --theme-tertiary-rgb: ${activePalette.tertiaryRgb};
         }
       `}</style>
 
@@ -275,6 +305,34 @@ export default function MarkdownEditor() {
                       <code {...rest}>
                         {children}
                       </code>
+                    );
+                  },
+                  h2: ({node, children, ...props}) => {
+                    const color = getStableColor(node);
+                    return (
+                      <h2 
+                        style={{
+                          '--h2-hex': `var(--theme-${color})`,
+                          '--h2-rgb': `var(--theme-${color}-rgb)`
+                        } as React.CSSProperties}
+                        {...props}
+                      >
+                        {children}
+                      </h2>
+                    );
+                  },
+                  h3: ({node, children, ...props}) => {
+                    const color = getStableColor(node);
+                    return (
+                      <h3 
+                        style={{
+                          '--h3-hex': `var(--theme-${color})`,
+                          '--h3-rgb': `var(--theme-${color}-rgb)`
+                        } as React.CSSProperties}
+                        {...props}
+                      >
+                        {children}
+                      </h3>
                     );
                   },
                   a: ({node, ...props}) => <a target="_blank" rel="noopener noreferrer" {...props} />,
