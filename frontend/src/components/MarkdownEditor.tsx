@@ -41,12 +41,16 @@ const extractText = (node: any): string => {
 
 const getStableColor = (node: any): string => {
   const text = extractText(node);
-  let hash = 0;
-  for (let i = 0; i < text.length; i++) {
-    hash = text.charCodeAt(i) + ((hash << 5) - hash);
+  const line = node?.position?.start?.line || 0;
+  const hashInput = text + line.toString();
+  
+  let hash = 2166136261;
+  for (let i = 0; i < hashInput.length; i++) {
+    hash ^= hashInput.charCodeAt(i);
+    hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
   }
   const colors = ['primary', 'secondary', 'tertiary'];
-  return colors[Math.abs(hash) % colors.length] || 'primary';
+  return colors[(hash >>> 0) % colors.length] || 'primary';
 };
 
 
